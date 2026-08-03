@@ -57,6 +57,8 @@ flagged a dataset account that turned out to contain two different speakers.
 
 ## Quick start
 
+**1. Install.**
+
 ```bash
 git clone <repository-url>
 cd rado-gender_classification
@@ -64,24 +66,42 @@ python -m venv venv && venv/Scripts/activate      # Linux/macOS: source venv/bin
 pip install -r requirements.txt
 ```
 
-Predict with the trained model (place `cnn_best.pt` in `models/`):
+This installs the `genderid` package in editable mode along with everything the
+pipeline and the interfaces need. Skipping it means `import genderid` will fail.
+
+**2. Get the model weights.** Checkpoints are not stored in git.
+
+```bash
+python scripts/00_get_model.py
+```
+
+Or train your own — see [Reproducing the models](#reproducing-the-models) below.
+
+**3. Predict.**
 
 ```python
 from genderid import GenderClassifier
 
 clf = GenderClassifier("models/cnn_best.pt")
 result = clf.predict_file("sample.wav")
-print(result.label, result.confidence)
+
+print(result.label)        # 'Ayol' | 'Erkak' | 'uncertain' | 'no_speech'
+print(result.confidence)   # None when uncertain
+print(result.probability)  # p(male), averaged over speech windows
 ```
 
-Run the web interface locally:
+`predict_file` accepts anything ffmpeg can read (wav, mp3, ogg/opus, m4a) and
+needs ffmpeg on PATH. `predict_waveform(array, sample_rate)` works on in-memory
+audio with no external dependency.
+
+**4. Or run the interfaces.**
 
 ```bash
 python -m app.gradio_app
 ```
 
-`predict_file` accepts anything ffmpeg can read (wav, mp3, ogg/opus, m4a).
-`predict_waveform(array, sample_rate)` works on in-memory audio.
+Opens the web UI at `http://127.0.0.1:7860` with file upload and live microphone.
+For the Telegram bot set `TELEGRAM_BOT_TOKEN` and run `python -m app.telegram_bot`.
 
 ## Reproducing the models
 
@@ -90,6 +110,7 @@ required for the transformer baseline.
 
 | Step | Script | What it does | Time |
 |---|---|---|---|
+| 0 | `00_get_model.py` | Download pretrained weights (skip if training) | 1 min |
 | 1 | `01_explore.py` | Inspect dataset schema and balance | 1 min |
 | 2 | `02_prepare.py` | Filter, cap per speaker, speaker-disjoint split | 17 min |
 | 3 | `03_features.py` | Cache log-mel features | 6 min |
