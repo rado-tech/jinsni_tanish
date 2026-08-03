@@ -22,6 +22,11 @@ pipeline_tag: audio-classification
 A compact convolutional network that predicts speaker gender from Uzbek speech.
 60,706 parameters, 0.2 MB on disk, ~4 ms per 2-second window on a laptop CPU.
 
+This is the **deployment** variant, chosen for real-time use. A more accurate
+but far heavier alternative is
+[rado-tech/uzbek-gender-wav2vec2](https://huggingface.co/rado-tech/uzbek-gender-wav2vec2)
+(98.75%, 361 MB, 504 ms per window).
+
 ## Model details
 
 - **Architecture:** four `Conv2d → BatchNorm2d → ReLU → MaxPool2d` blocks
@@ -85,6 +90,8 @@ Excluding them the model scores 99.07%, though the reportable figure remains
   noise as speech.
 
 ## Usage
+
+Install the reference implementation from the project repository, then:
 
 ```python
 from genderid import GenderClassifier

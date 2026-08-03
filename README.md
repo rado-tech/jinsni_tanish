@@ -8,6 +8,10 @@ split and runs in **4 ms** on a laptop CPU. A fine-tuned wav2vec2 baseline
 (94.6M parameters) reaches 98.8% but needs 504 ms per prediction — the
 comparison, and what it implies for deployment, is the point of this repository.
 
+**Pretrained models:**
+[uzbek-gender-cnn](https://huggingface.co/rado-tech/uzbek-gender-cnn) (0.2 MB, deployed) ·
+[uzbek-gender-wav2vec2](https://huggingface.co/rado-tech/uzbek-gender-wav2vec2) (361 MB, reference)
+
 *Uzbek: [README.uz.md](README.uz.md)*
 
 ---
@@ -69,13 +73,16 @@ pip install -r requirements.txt
 This installs the `genderid` package in editable mode along with everything the
 pipeline and the interfaces need. Skipping it means `import genderid` will fail.
 
-**2. Get the model weights.** Checkpoints are not stored in git.
+**2. Get the model weights.** Checkpoints are not stored in git; they live on
+the Hugging Face Hub.
 
 ```bash
 python scripts/00_get_model.py
 ```
 
-Or train your own — see [Reproducing the models](#reproducing-the-models) below.
+Downloads the 0.2 MB CNN into `models/`. Add `--w2v2` to also fetch the 361 MB
+transformer, which is only needed to reproduce the comparison in step 8. Or
+train your own — see [Reproducing the models](#reproducing-the-models) below.
 
 **3. Predict.**
 

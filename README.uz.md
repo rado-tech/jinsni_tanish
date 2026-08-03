@@ -7,6 +7,10 @@ va noutbuk protsessorida **4 ms** da ishlaydi. Taqqoslash uchun fine-tune
 qilingan wav2vec2 (94.6M parametr) 98.8% beradi, lekin bitta bashorat uchun
 504 ms sarflaydi.
 
+**Tayyor modellar:**
+[uzbek-gender-cnn](https://huggingface.co/rado-tech/uzbek-gender-cnn) (0.2 MB, deploy qilingan) ·
+[uzbek-gender-wav2vec2](https://huggingface.co/rado-tech/uzbek-gender-wav2vec2) (361 MB, taqqoslash uchun)
+
 *English: [README.md](README.md)*
 
 ---
@@ -65,13 +69,16 @@ pip install -r requirements.txt
 Bu `genderid` paketini editable rejimda o'rnatadi. Busiz `import genderid`
 ishlamaydi.
 
-**2. Model og'irliklarini olish.** Checkpoint git'da saqlanmaydi.
+**2. Model og'irliklarini olish.** Checkpoint git'da saqlanmaydi, u Hugging Face
+Hub'da turadi.
 
 ```bash
 python scripts/00_get_model.py
 ```
 
-Yoki o'zingiz o'qiting — pastdagi jadvalga qarang.
+0.2 MB lik CNN'ni `models/` ga yuklab oladi. `--w2v2` qo'shsangiz 361 MB lik
+transformer ham keladi — u faqat 8-qadamdagi taqqoslash uchun kerak. Yoki
+o'zingiz o'qiting: pastdagi jadvalga qarang.
 
 **3. Bashorat.**
 
