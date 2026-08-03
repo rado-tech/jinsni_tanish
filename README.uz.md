@@ -53,6 +53,8 @@ haqiqatan ikki xil odamning ovozi bor edi.
 
 ## Tez boshlash
 
+**1. O'rnatish.**
+
 ```bash
 git clone <repository-url>
 cd rado-gender_classification
@@ -60,19 +62,42 @@ python -m venv venv && venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+Bu `genderid` paketini editable rejimda o'rnatadi. Busiz `import genderid`
+ishlamaydi.
+
+**2. Model og'irliklarini olish.** Checkpoint git'da saqlanmaydi.
+
+```bash
+python scripts/00_get_model.py
+```
+
+Yoki o'zingiz o'qiting — pastdagi jadvalga qarang.
+
+**3. Bashorat.**
+
 ```python
 from genderid import GenderClassifier
 
 clf = GenderClassifier("models/cnn_best.pt")
 natija = clf.predict_file("sample.wav")
-print(natija.label, natija.confidence)
+
+print(natija.label)        # 'Ayol' | 'Erkak' | 'uncertain' | 'no_speech'
+print(natija.confidence)   # "aniq emas" bo'lsa None
+print(natija.probability)  # p(erkak), nutqli oynalar o'rtachasi
 ```
 
-Veb-interfeys:
+`predict_file` ffmpeg o'qiy oladigan har qanday formatni qabul qiladi va ffmpeg
+PATH'da bo'lishini talab qiladi. `predict_waveform(array, sr)` xotiradagi audio
+uchun — tashqi bog'liqliksiz.
+
+**4. Interfeyslar.**
 
 ```bash
 python -m app.gradio_app
 ```
+
+`http://127.0.0.1:7860` ochiladi. Telegram bot uchun `TELEGRAM_BOT_TOKEN` ni
+o'rnatib, `python -m app.telegram_bot` ishlating.
 
 ## Modelni qayta o'qitish
 
