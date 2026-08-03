@@ -77,8 +77,8 @@ class GenderClassifier:
         if not checkpoint.exists():
             raise FileNotFoundError(
                 f"Checkpoint not found: {checkpoint}\n"
-                "Train one with scripts/04_train_cnn.py, or download the released "
-                "weights (see README)."
+                "Download the released weights:  python scripts/00_get_model.py\n"
+                "Or train your own:              python scripts/04_train_cnn.py"
             )
         torch.set_num_threads(threads)
 

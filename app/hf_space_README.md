@@ -20,7 +20,13 @@ gender from voice.
 | Parameters | 60,706 |
 | Test accuracy | 98.1% (speaker-disjoint split) |
 | Latency | ~4 ms per 2 s window on CPU |
+| Weights | [rado-tech/uzbek-gender-cnn](https://huggingface.co/rado-tech/uzbek-gender-cnn) |
 | Training data | [uzbekvoice-filtered](https://huggingface.co/datasets/DavronSherbaev/uzbekvoice-filtered) |
+
+A more accurate but much heavier alternative — 98.75% at 504 ms per window —
+is available as [rado-tech/uzbek-gender-wav2vec2](https://huggingface.co/rado-tech/uzbek-gender-wav2vec2).
+The small model is used here because real-time streaming needs the latency
+headroom.
 
 ## How it works
 

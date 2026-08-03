@@ -133,20 +133,33 @@ read-only objects that `shutil.rmtree` cannot remove on Windows.
 image installs it. Get it from [ffmpeg.org](https://ffmpeg.org/download.html) if
 you want to test before deploying.
 
-## Publishing the model to the Hub
+## Published models
 
-To share the weights as a standalone model repository:
+| Repository | Contents | Size |
+|---|---|---|
+| [rado-tech/uzbek-gender-cnn](https://huggingface.co/rado-tech/uzbek-gender-cnn) | `cnn_best.pt` | 0.2 MB |
+| [rado-tech/uzbek-gender-wav2vec2](https://huggingface.co/rado-tech/uzbek-gender-wav2vec2) | full `transformers` model | 361 MB |
+
+`scripts/00_get_model.py` pulls from these by default.
+
+To republish after retraining:
 
 ```bash
-huggingface-cli upload <user>/uzbek-gender-cnn models/cnn_best.pt cnn_best.pt
+huggingface-cli upload rado-tech/uzbek-gender-cnn models/cnn_best.pt cnn_best.pt
 ```
 
 ```bash
-huggingface-cli upload <user>/uzbek-gender-cnn docs/MODEL_CARD.md README.md
+huggingface-cli upload rado-tech/uzbek-gender-cnn docs/MODEL_CARD.md README.md
 ```
 
-The model card in [MODEL_CARD.md](MODEL_CARD.md) already carries the metadata
-header the Hub expects.
+```bash
+huggingface-cli upload rado-tech/uzbek-gender-wav2vec2 docs/MODEL_CARD_W2V2.md README.md
+```
+
+Both model cards ([MODEL_CARD.md](MODEL_CARD.md),
+[MODEL_CARD_W2V2.md](MODEL_CARD_W2V2.md)) carry the YAML metadata header the Hub
+expects — uploading them as `README.md` is what makes the models appear with the
+right language, license and task tags in Hub search.
 
 ## Image size
 
