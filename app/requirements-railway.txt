@@ -1,0 +1,7 @@
+# Railway: Telegram bot + Gradio web UI in one service.
+# torch (CPU build) is installed separately in the Dockerfile.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torchaudio            # resampling only; browser mics deliver 44.1/48 kHz
+numpy>=1.26
+python-telegram-bot>=21.0
+gradio>=6.0,<7

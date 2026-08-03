@@ -1,0 +1,12 @@
+# Development environment: installs the genderid package in editable mode plus
+# everything needed to run the pipeline in scripts/ and the interfaces in app/.
+# Exact dependency lists live in pyproject.toml.
+#
+#     pip install -r requirements.txt
+#
+# Deployment images use the trimmed lists in app/requirements-*.txt instead.
+
+# CPU build of torch; a plain install pulls the CUDA wheel (~2.5 GB) on Linux.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+-e .[dev,app]

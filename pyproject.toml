@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "genderid"
+version = "1.0.0"
+description = "Speaker gender recognition from Uzbek speech"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+keywords = ["speech", "audio-classification", "uzbek", "cnn"]
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Sound/Audio :: Analysis",
+]
+
+# Runtime dependencies of the genderid package itself. ffmpeg must be on PATH
+# for predict_file(); predict_waveform() has no such requirement.
+dependencies = [
+    "torch>=2.2",
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+# Full training and evaluation pipeline (scripts/).
+dev = [
+    "datasets==3.6.0",       # 4.x needs torchcodec + FFmpeg, awkward on Windows
+    "soundfile>=0.12",
+    "librosa>=0.10",         # mel filterbank generation and parity checks only
+    "pandas",
+    "matplotlib",
+    "tqdm",
+    "transformers>=4.40",    # transformer baseline, scripts 06-07
+]
+# Web UI and Telegram bot.
+app = [
+    "gradio>=6.0,<7",
+    "python-telegram-bot>=21.0",
+    "torchaudio",            # resampling for microphone input
+]
+
+[project.urls]
+Dataset = "https://huggingface.co/datasets/DavronSherbaev/uzbekvoice-filtered"
+
+[tool.setuptools]
+packages = ["genderid", "app"]
+
+[tool.setuptools.package-data]
+genderid = ["mel_filters.npy"]
